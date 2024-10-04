@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My First Project</title>
+    <link rel="stylesheet" href="styleForTrackZ.css">
+</head>
+<body>
+    <header>
+        <h1>TrakZ</h1>
+    </header>
+
+    <main>
+
+        <form id="csvForm">
+            <h2>Upload Your CSV File</h2>
+            <label for="csvFile">Select a file:</label>
+            <br>
+            <input type="file" id="csvFile" name="csvFile">
+            <br><br>
+            <button type="submit">Send</button>
+        </form>
+        <br>
+        <button id="showTableBtn" style="display: none;">Show Table</button>
+        <div id="showTableText" style="display: none;">
+            <h3>File Content as Table</h3>
+        </div>
+        <table id="fileTable" border="1"></table>
+    </main>
+    <script src="trackZ.js"></script>
+</body>
+</html>
