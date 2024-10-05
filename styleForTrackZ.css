@@ -12,7 +12,7 @@ header {
     text-align: center; /* Center-align text inside the header */
     background-color: #4CAF50; /* Green background for the header */
     color: white; /* White text color */
-    padding: 20px 0; /* Add padding to give space around the text */
+    padding: 1px 0; /* Add padding to give space around the text */
     font-size: 2em; /* Increase font size to make the header stand out */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for a modern look */
 }
@@ -93,3 +93,35 @@ td {
         font-size: 0.9em; /* Slightly smaller table text on mobile */
     }
 }
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(10, 30px); /* 10 columns, each 30px wide */
+    grid-template-rows: repeat(5, 30px);    /* 5 rows, each 30px tall */
+    gap: 5px; /* Space between grid cells */
+}
+
+.grid div {
+    width: 30px;
+    height: 30px;
+    border: 1px solid #ccc; /* Add a light border to each cell */
+    background-color: #f0f0f0; /* Light gray background for zero contributions */
+}
+
+.grid div[data-value="0"] {
+    background-color: #f0f0f0; /* Light gray for zero contributions */
+}
+
+.grid div[data-value="low"] {
+    background-color: #a2d9ce; /* Light green for low activity */
+}
+
+.grid div[data-value="medium"] {
+    background-color: #45b39d; /* Medium green for moderate activity */
+}
+
+.grid div[data-value="high"] {
+    background-color: #1e8449; /* Dark green for high activity */
+}
+
+

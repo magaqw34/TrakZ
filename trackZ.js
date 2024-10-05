@@ -3,6 +3,7 @@ const form = document.getElementById('csvForm');
 const fileInput = document.getElementById('csvFile');
 const fileTable = document.getElementById('fileTable');
 const showTableBtn = document.getElementById('showTableBtn');
+const showChartBtn = document.getElementById('showChartBtn');
 
 // Arrays
 
@@ -42,6 +43,7 @@ form.addEventListener('submit',function(event){
                 }
             });
             showTableBtn.style.display = 'inline';
+            showChartBtn.style.display = 'inline';
             console.log('Data stored in arrays: ', { dates, workout, study, sleep });
 
         };
@@ -50,6 +52,15 @@ form.addEventListener('submit',function(event){
     } else {
         console.log('No file selected.');
     }
+});
+
+showTableBtn.addEventListener('click', function() {
+    chatrSecn.style.display = 'block';
+    createBarChart();
+    createLineChart();
+    createContributionGrid('workoutGrid', workout);
+    createContributionGrid('studyGrid', study);
+    createContributionGrid('sleepGrid', sleep);
 });
 
 showTableBtn.addEventListener('click',function(){
@@ -85,41 +96,102 @@ showTableBtn.addEventListener('click',function(){
         fileTable.appendChild(rowElement); // Add row to the table
     }
 });
+function createBarChart() {
+    const ctx = document.getElementById('barChart').getContext('2d');
+    const barChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: dates, // x-axis (days)
+            datasets: [
+                {
+                    label: 'Workout (hrs)',
+                    data: workout,
+                    backgroundColor: 'rgba(75, 192, 192, 0.5)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                },
+                {
+                    label: 'Study (hrs)',
+                    data: study,
+                    backgroundColor: 'rgba(153, 102, 255, 0.5)',
+                    borderColor: 'rgba(153, 102, 255, 1)',
+                    borderWidth: 1
+                },
+                {
+                    label: 'Sleep (hrs)',
+                    data: sleep,
+                    backgroundColor: 'rgba(255, 159, 64, 0.5)',
+                    borderColor: 'rgba(255, 159, 64, 1)',
+                    borderWidth: 1
+                }
+            ]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+}
 
-// form.addEventListener('submit',function(event){
-//     event.preventDefault();
+// Create a line chart for workout, study, and sleep
+function createLineChart() {
+    const ctx = document.getElementById('lineChart').getContext('2d');
+    const lineChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: dates,
+            datasets: [
+                {
+                    label: 'Workout (hrs)',
+                    data: workout,
+                    backgroundColor: 'rgba(75, 192, 192, 0.5)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    fill: false
+                },
+                {
+                    label: 'Study (hrs)',
+                    data: study,
+                    backgroundColor: 'rgba(153, 102, 255, 0.5)',
+                    borderColor: 'rgba(153, 102, 255, 1)',
+                    fill: false
+                },
+                {
+                    label: 'Sleep (hrs)',
+                    data: sleep,
+                    backgroundColor: 'rgba(255, 159, 64, 0.5)',
+                    borderColor: 'rgba(255, 159, 64, 1)',
+                    fill: false
+                }
+            ]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+}
 
-//     const file = fileInput.files[0];
-//     if(file){
-//         const reader = new FileReader();
+// Create a contribution grid for each activity
+function createContributionGrid(gridId, data) {
+    const grid = document.getElementById(gridId);
+    grid.innerHTML = ''; // Clear existing grid
 
-//         reader.onload=function(e) {
+    const maxValue = Math.max(...data); // Get the max value to normalize colors
 
-//             let fileContent = e.target.result;
+    data.forEach((value, index) => {
+        const dayBox = document.createElement('div');
+        
+        // Set background color based on value intensity (light to dark green)
+        const intensity = value / maxValue;
+        dayBox.style.backgroundColor = `rgba(0, 128, 0, ${intensity})`;
 
-//             console.log(fileContent);
-//             console.log(typeof fileContent);
-
-//             const rows = fileContent.split("\n");
-//             fileTable.innerHTML = '';
-
-//             rows.forEach((row,rowIndex)=>{
-//                 const rowElement = document.createElement('tr');
-//                 const columns = row.split(",");
-
-//                 columns.forEach((column, colIndex) => {
-//                     const cellElement = document.createElement(rowIndex === 0 ? 'th' : 'td'); // First row as header
-//                     cellElement.textContent = column.trim(); // Remove any extra whitespace
-//                     rowElement.appendChild(cellElement); // Append cell to the row
-//                 });
-
-//                 fileTable.appendChild(rowElement); // Append row to the table
-
-
-//             });
-//         };
-//         reader.readAsText(file);
-//     }else {
-//         fileContent.textContent = 'No file selected.';
-//     }
-// }); 
+        // Append box to grid
+        grid.appendChild(dayBox);
+    });
+}

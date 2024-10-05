@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My First Project</title>
+    <title>TrakZ - Track your Progress</title>
     <link rel="stylesheet" href="styleForTrackZ.css">
 </head>
 <body>
@@ -23,11 +23,34 @@
         </form>
         <br>
         <button id="showTableBtn" style="display: none;">Show Table</button>
+        <button id="showChartBtn" style="display: none;">Show Charts</button>
         <div id="showTableText" style="display: none;">
             <h3>File Content as Table</h3>
         </div>
         <table id="fileTable" border="1"></table>
     </main>
+
+    <div id="chatrSecn" style="display: none;" >
+        <main>
+            <h3>Bar Chart</h3>
+            <canvas id="barChart" width="400" height="200"></canvas>
+        
+            <h3>Line Chart</h3>
+            <canvas id="lineChart" width="400" height="200"></canvas>
+        
+            <h3>Workout Contribution Grid</h3>
+            <div id="workoutGrid" class="grid"></div>
+        
+            <h3>Study Contribution Grid</h3>
+            <div id="studyGrid" class="grid"></div>
+        
+            <h3>Sleep Contribution Grid</h3>
+            <div id="sleepGrid" class="grid"></div>
+        </main>
+    </div>
+    
+    
     <script src="trackZ.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </body>
 </html>
